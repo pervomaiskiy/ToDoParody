@@ -1,16 +1,44 @@
 import './Layout.scss'
 import {AiOutlineUnorderedList} from 'react-icons/ai';
-import Menu from '../components/Menu/Menu'
+import List from '../components/Menu/List.jsx'
+import AddListButton from '../components/AddListButton/AddListButton'
 function Layout(){
     return(
         <div className={'todo'}>
             <div className={'todo_sideBar'}>
-                <Menu
-                    icon={<AiOutlineUnorderedList/>}
-                    text={'Все задачи'}
+                <List
+                    items={[
+                        {
+                            icon:<AiOutlineUnorderedList/>,
+                            label:'Все задачи',
+                            active:true
+                        }
+                    ]}
                 />
+                 <List
+                    items={[
+                        {
+                            color:'#428883',
+                            label:'Покупки'
+                        },
+                        {
+                            color:'#ffddcc',
+                            label:'Книги'
+                        },
+                        {
+                            color:'#ff4356',
+                            label:'Js'
+                        },
+
+                    ]}
+                    isRemovable
+                />
+                <AddListButton />
+
             </div>
+           
             <div className={'todo_tasks'}>
+           
             </div>
         </div>
     )
