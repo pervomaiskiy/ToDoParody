@@ -2,6 +2,7 @@ import './Layout.scss'
 import {AiOutlineUnorderedList} from 'react-icons/ai';
 import List from '../components/Menu/List.jsx'
 import AddListButton from '../components/AddListButton/AddListButton'
+import DB from '../ArrValue/db.json'
 function Layout(){
     return(
         <div className={'todo'}>
@@ -33,7 +34,7 @@ function Layout(){
                     ]}
                     isRemovable
                 />
-                <AddListButton />
+                <AddListButton colors={DB.colors} />
 
             </div>
            

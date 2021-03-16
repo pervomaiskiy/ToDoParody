@@ -1,11 +1,54 @@
 .addList{
 
     &_popup{
-        width: 235px;
+        position: relative;
+        width: 240px;
         height: 150px;
         background-color: #fff;
         box-shadow: 0px 6px 10px rgba(0,0,0, 0.05);
         border-radius: 10px;
+        padding: 18px;
+        box-sizing: border-box;
+        &_closeBtn{
+            fill: #b1a9a9;
+            cursor: pointer;
+            font-size: 17px;
+            position: absolute;
+            right: 1px;
+            top: 5px;
+            transition: fill .3s ease;
+            &:hover{
+                fill: darken(#b1a9a9,10%);
+            }
+            &:active{
+                fill: darken(#b1a9a9,20%);
+            }
+        }
     }
+    &_popupColors{
+        margin-top: 15px;
+        ul{
+            display: flex;
+            justify-content: space-between ;
+            
+        }
+        &_item{
+            font-size: 18px;
+            // box-sizing: border-box;
+            margin-right: 2px;
+            border: 2px solid  rgba(129, 129, 158, 0%);
+            border-radius: 100%;
+            cursor: pointer;
+        }
+        &_item.active{
+            border: 2px solid  rgb(129, 129, 158);
+            border-radius: 100%;
 
+        }
+    }
+}
+
+.addBtnList_button{
+    width: 100%;
+    margin-top: 15px;
 }
