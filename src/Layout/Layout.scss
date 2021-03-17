@@ -31,6 +31,10 @@
     &:focus{
         border-color:#dbdbdb ;
     }
+    &.falseValue{
+    border-color: #e01616;
+        
+    }
 }
 
 .button{

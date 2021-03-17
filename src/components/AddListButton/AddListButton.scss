@@ -8,6 +8,8 @@
         box-shadow: 0px 6px 10px rgba(0,0,0, 0.05);
         border-radius: 10px;
         padding: 18px;
+        top: -25px;
+        left: 10px;
         box-sizing: border-box;
         &_closeBtn{
             fill: #b1a9a9;
@@ -34,7 +36,6 @@
         }
         &_item{
             font-size: 18px;
-            // box-sizing: border-box;
             margin-right: 2px;
             border: 2px solid  rgba(129, 129, 158, 0%);
             border-radius: 100%;

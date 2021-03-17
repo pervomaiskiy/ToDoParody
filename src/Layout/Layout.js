@@ -1,40 +1,55 @@
+import React,{useState,useEffect} from 'react';
+
 import './Layout.scss'
 import {AiOutlineUnorderedList} from 'react-icons/ai';
-import List from '../components/Menu/List.jsx'
+import List,{ListNav} from '../components/Menu/List.jsx'
 import AddListButton from '../components/AddListButton/AddListButton'
-import DB from '../ArrValue/db.json'
+import dataBase from '../localFireBase'
 function Layout(){
+
+    const [colorlList,setColorList] = useState();
+    const [toDolist,setToDolist] = useState([]);
+
+    useEffect(()=>{
+        dataBase.collection('colors')
+        .orderBy('id')
+        .onSnapshot((snapshot)=>{
+            setColorList(snapshot.docs.map((item)=>{
+                return{id:item.id,data:item.data()}
+            }))
+        })
+
+    },[])
+
+    useEffect(()=>{
+        dataBase.collection('lists')
+        .orderBy('timestamp','desc')
+        .onSnapshot((snapshot)=>{
+            setToDolist(snapshot.docs.map((item)=>{
+                return{id:item.id,data:item.data()}
+            }))
+        })
+    },[])
+
+
+
     return(
         <div className={'todo'}>
             <div className={'todo_sideBar'}>
-                <List
+                <ListNav
                     items={[
                         {
                             icon:<AiOutlineUnorderedList/>,
-                            label:'Все задачи',
+                            name:'Все задачи',
                             active:true
                         }
                     ]}
                 />
                  <List
-                    items={[
-                        {
-                            color:'#428883',
-                            label:'Покупки'
-                        },
-                        {
-                            color:'#ffddcc',
-                            label:'Книги'
-                        },
-                        {
-                            color:'#ff4356',
-                            label:'Js'
-                        },
-
-                    ]}
+                    items={toDolist}
                     isRemovable
                 />
-                <AddListButton colors={DB.colors} />
+                <AddListButton colors={colorlList} classNames={'menu_list_addButton'}/>
 
             </div>
            
