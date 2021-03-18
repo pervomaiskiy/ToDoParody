@@ -1,5 +1,6 @@
 
 .todo{
+    display: flex;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -17,6 +18,9 @@
         height: calc(100% - 120px);
         border-right: 1px solid #f1f1f1;
         padding: 60px 20px;
+    }
+    &_tasks{
+        flex: 1;
     }
 }
 

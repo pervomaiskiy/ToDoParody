@@ -9,6 +9,7 @@ function Layout(){
 
     const [colorlList,setColorList] = useState();
     const [toDolist,setToDolist] = useState([]);
+    // const [proba,setProba] = useState();
 
     useEffect(()=>{
         dataBase.collection('colors')
@@ -31,30 +32,35 @@ function Layout(){
         })
     },[])
 
-
-
     return(
         <div className={'todo'}>
             <div className={'todo_sideBar'}>
-                <ListNav
+                <List
+                
                     items={[
                         {
+                            id:'allList',
+                            data:{
                             icon:<AiOutlineUnorderedList/>,
                             name:'Все задачи',
-                            active:true
+                            }
+
                         }
                     ]}
                 />
                  <List
+                 onRemove={(list)=>{
+                    dataBase.collection('lists').doc(list).delete()
+                 }}
                     items={toDolist}
                     isRemovable
                 />
-                <AddListButton colors={colorlList} classNames={'menu_list_addButton'}/>
+                <AddListButton colors={colorlList}/>
 
             </div>
            
             <div className={'todo_tasks'}>
-           
+                <h2>asdasdasda</h2>
             </div>
         </div>
     )

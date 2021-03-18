@@ -1,20 +1,20 @@
 import React,{useState,useRef} from 'react';
 import firebase from 'firebase'
 import dataBase from '../../localFireBase'
-
-import {ListNav} from '../Menu/List'
+import List from '../Menu/List'
 import {AiOutlinePlus,AiFillCloseCircle} from 'react-icons/ai'
 import {FaCircle} from 'react-icons/fa'
 import './AddListButton.scss'
 
-import DataBase from '../../localFireBase'
 
-const AddListButton =({colors,classNames})=>{
+const AddListButton =({colors,className})=>{
 
     const listNameInp = useRef()
 
     const [visablePopup,setVisablePopup] = useState(false)
     const [selectdColor,setSelectedColor] = useState('#C9D1D3')
+
+
 
 function addNewList(){
     if(!listNameInp.current.value){
@@ -28,21 +28,26 @@ function addNewList(){
     })
     listNameInp.current.value = ''
     listNameInp.current.classList.remove('falseValue')
+    setVisablePopup(false)
+    setSelectedColor('#C9D1D3')
 
     
 }
 
+
+
     return(
         <div className={'addList'}>
-             <ListNav
-                classNames={classNames}
+             <List
+                className={'menu_list_addButton'}
                 onClick={()=>setVisablePopup(true)}
                 items={[
-                    {
-                        className:'menu_list_addButton',
-                        icon:<AiOutlinePlus/>,
-                        name:'Добавить список',
-                        
+                    { id:'addList',
+                        data:{
+                            className:'menu_list_addButton',
+                            icon:<AiOutlinePlus/>,
+                            name:'Добавить список',
+                        }
                     }
                 ]}
             />
