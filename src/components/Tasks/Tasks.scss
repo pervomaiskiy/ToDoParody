@@ -1,0 +1,76 @@
+.tasks{
+    &_title{
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 32px;
+        line-height: 39px;
+        color: #64c4ed;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #f2f2f2;
+        &:hover i{
+            opacity: 0.8;
+        }
+        i{
+            padding-left: 15px;
+            color: rgb(151, 151, 151);
+            opacity: 0.2;
+            font-size: 20px;
+            cursor: pointer;
+            transition: .3s ease;
+
+        }
+    }
+    &_item{
+        margin-top: 30px;
+        &-row{
+        display: flex;
+        align-items: center;
+            p{
+                padding-left: 10px;
+            }    
+        }
+    }
+    .checkbox{
+
+        }
+        &:hover{
+            label{
+                transition: all .2s ease;
+                background-color: #f2f2f2;
+                border-color: #f2f2f2;
+                svg{
+                    opacity: 1;
+                    color: #a5a2a2;
+                }
+            }
+        }
+        input{
+            display: none;
+        }
+        label{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border:2px solid #bfc3c5;
+            border-radius: 30px;
+            width: 20px;
+            height: 20px;
+            svg{
+                opacity: 0;
+                font-size: 13px;
+            }
+        }
+        input:checked + label{
+            background-color: rgb(109, 199, 97);
+            border-color: rgb(109, 199, 97);
+
+            svg{
+                color: rgb(255, 255, 255);
+                opacity: 1;
+            }
+
+    }
+
+}

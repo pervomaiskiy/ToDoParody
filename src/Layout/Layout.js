@@ -1,10 +1,11 @@
 import React,{useState,useEffect} from 'react';
-
-import './Layout.scss'
-import {AiOutlineUnorderedList} from 'react-icons/ai';
-import List,{ListNav} from '../components/Menu/List.jsx'
-import AddListButton from '../components/AddListButton/AddListButton'
 import dataBase from '../localFireBase'
+import './Layout.scss'
+import {AiOutlineUnorderedList,AiOutlineCheck} from 'react-icons/ai';
+import List from '../components/Menu/List.jsx'
+import AddListButton from '../components/AddListButton/AddListButton'
+import Tasks from '../components/Tasks/Tasks'
+
 function Layout(){
 
     const [colorlList,setColorList] = useState();
@@ -60,7 +61,9 @@ function Layout(){
             </div>
            
             <div className={'todo_tasks'}>
-                <h2>asdasdasda</h2>
+                 <Tasks
+                 icon={<AiOutlineCheck/>}/>
+
             </div>
         </div>
     )
