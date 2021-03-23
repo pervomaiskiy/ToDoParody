@@ -24,7 +24,8 @@ function addNewList(){
     dataBase.collection('lists').add({
         color:selectdColor,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        name:listNameInp.current.value
+        name:listNameInp.current.value,
+        tasks: []
     })
     listNameInp.current.value = ''
     listNameInp.current.classList.remove('falseValue')
