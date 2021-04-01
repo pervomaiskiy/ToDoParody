@@ -21,13 +21,27 @@
 
         }
     }
-    &_item{
+    &_items{
         margin-top: 30px;
+        h2{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+           font-family: Montserrat;
+           font-weight: bold;
+           font-size: 22px;
+           color: #c9d1d3;
+           text-align: center;
+        }
+    }
+    &_item{
+        margin-top: 5px;
         &-row{
         display: flex;
         align-items: center;
-            p{
+            input{
                 padding-left: 10px;
+                border: none;
             }    
         }
     }
