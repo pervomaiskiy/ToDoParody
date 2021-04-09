@@ -1,57 +1,96 @@
 import './Tasks.scss';
+import React from 'react';
 import {FiEdit3} from 'react-icons/fi';
 import {useLocation} from 'react-router-dom'
 import {useState,useEffect} from 'react'
 import dataBase from '../../localFireBase'
+import {AiOutlinePlus} from 'react-icons/ai'
 
 
-export default({icon,list,onEditTitle,title,onRenameTitle,deleteItem})=>{
+function Tasks({icon,listId,onEditTitle}){
+
+        const [taskState,setTaskState] = useState({tasks:[]})
 
 
-    const editTitle =()=>{
-        const newTitle = window.prompt('Title name',list.data.name)
-        if(newTitle){
-            onEditTitle(list.id,newTitle)
-            onRenameTitle(newTitle)
+
+        useEffect(() => {
+            if(listId){
+            dataBase.collection('lists')
+            .doc(listId)
+            .get().then((snapshot)=>{
+                console.log(`qqqqq`)
+                setTaskState(snapshot.data()) 
+            })
+            }
+        
+        }, [listId])
+
+        const editTitle =()=>{
+            const newTitle = window.prompt('Title name',taskState.name)
+            if(newTitle){
+                onEditTitle(listId,newTitle)
+
+            }
         }
+        const deleteTaskResolution=(id)=>{
+            dataBase.collection('lists')
+            .doc(listId)
+            .update({tasks: taskState.tasks.map((item,i)=>{
+                    if(i === id){
+                        item.done = !item.done
+                        console.log('rerender')
+                    }
+                    return item
+                })
+            })
+        }
+        return(
+            <div className={'tasks'}>
+                <h2 className={'tasks_title'}>{taskState.name}
+                    <i className={'rename'}
+                        onClick={()=>editTitle()}
+                    ><FiEdit3/></i>
+                </h2>
+                <div className={'tasks_items'}>
+                    {!taskState.tasks.length && <h2>Задачи отсутствуют</h2>}
+                    {taskState.tasks.map((task,i)=>{
+                        return(
+                            <div key={i} className={'tasks_item'}>
+                                <div className={'tasks_item-row'}>
+                                    <div className={'checkbox'}>
+                                        {task.done && <div>proba trushki</div>}
+                                        <input id={i} type={'checkbox'}></input>
+                                        <label htmlFor={i}
+                                        onClick={()=>deleteTaskResolution(i)}
+                                        >{icon}</label>
+                                    </div>
+                                    <input readOnly value={task.name}></input>
+                                </div>
+                            </div>
+
+                        )
+                    })}
+                    <div className="tasks_form">
+                        <div className="tasks__form-new">
+                            <i><AiOutlinePlus/></i>
+                            <span>Новая задача</span>
+                        </div>
+                    </div>
+                </div>
+    
+
+                
+
+
+                
+            
+            </div>
+        )
     }
 
-      return(
-        <div className={'tasks'}>
-            <h2 className={'tasks_title'}>{title}
-                <i className={'rename'}
-                    onClick={()=>editTitle()}
-                ><FiEdit3/></i>
-            </h2>
-            <div className={'tasks_items'}>
-                {!list.data.tasks.length && <h2>Задачи отсутствуют</h2>}
-                {list.data.tasks.map((task,i)=>{
-                    return(
-                        <div key={i} className={'tasks_item'}>
-                            <div className={'tasks_item-row'}>
-                                <div className={'checkbox'}>
-                                
-                                    <input id={i} type={'checkbox'}></input>
-                                    <label htmlFor={i}>{icon}</label>
-                                </div>
-                                <input readOnly value={task}></input>
-                            </div>
-                        </div>
+export default React.memo(Tasks)
 
-                    )
-                })}
-            </div>
-   
-
-            
-
-
-            
-        
-        </div>
-    )
-}
-
+// console.log(taskState.tasks.map((item,i)=>{if(i === id)item.done = true}))
 
 
 // export default({icon,title})=>{
@@ -105,4 +144,3 @@ export default({icon,list,onEditTitle,title,onRenameTitle,deleteItem})=>{
         
 //         </div>
 //     )
-// }

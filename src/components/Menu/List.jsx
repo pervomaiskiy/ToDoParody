@@ -7,13 +7,8 @@ import './List.scss'
 import classNames from 'classnames'
 import dataBase from '../../localFireBase'
 
-export default ({ items,onClick,isRemovable,onRemove,onClickItem,activeList,taskTitle})=>{
+export default ({ items,onClick,isRemovable,onRemove,onClickItem,activeList,activeTasks})=>{
 
-
-
-    const { url } = useRouteMatch();
-    const history = useHistory();
-    const location = useLocation()
     
     const RemoveList=(list)=>{
         if(window.confirm("Вы действительно хотите удалить список?")){
@@ -25,7 +20,7 @@ export default ({ items,onClick,isRemovable,onRemove,onClickItem,activeList,task
         <ul onClick={onClick} className={'menu_list'}>
         {items.map((item,i)=>{
              return(
-                 <li onClick={onClickItem?()=>{onClickItem(item);taskTitle(item.data.name)}:null}
+                 <li onClick={onClickItem?()=>{onClickItem(item.id)}:null}
                      key={i}
                      className={classNames(item.data.className,  {active: activeList && activeList.id === item.id})}
                      >

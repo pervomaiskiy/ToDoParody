@@ -6,27 +6,23 @@ import {AiOutlineUnorderedList,AiOutlineCheck} from 'react-icons/ai';
 import List from '../components/Menu/List.jsx'
 import AddListButton from '../components/AddListButton/AddListButton'
 import Tasks from '../components/Tasks/Tasks'
-import {useHistory,useLocation,useRouteMatch} from 'react-router-dom'
 
 function Layout(){
 
     const [colorlList,setColorList] = useState();
     const [toDolist,setToDolist] = useState([]);
-    const [activeList,setActiveList] = useState(null);
-    const [renameTitleState,setRenameTitleState] = useState();
-    console.log(renameTitleState)
-    const history = useHistory()
-    const location = useLocation()
+    const [activeList,setActiveList] = useState();
+
 
     const renameTitle=(id,title)=>{
         dataBase.collection('lists')
         .doc(id)
-        .set({name: title},{merge: true})
-        
-        
+        .update({name: title})  
     }
 
+
     useEffect(()=>{
+        console.log('colors')
         dataBase.collection('colors')
         .orderBy('id')
         .onSnapshot((snapshot)=>{
@@ -38,6 +34,7 @@ function Layout(){
     },[])
 
     useEffect(()=>{
+        console.log('lists')
         dataBase.collection('lists')
         .orderBy('timestamp','desc')
         .onSnapshot((snapshot)=>{
@@ -47,7 +44,6 @@ function Layout(){
         })
         
     },[])
-    
     return(
         <div className={'todo'}>
             <div className={'todo_sideBar'}>
@@ -65,14 +61,12 @@ function Layout(){
 
                 />
                  <List
-
-                    taskTitle={setRenameTitleState}
                  onRemove={(list)=>{
                     dataBase.collection('lists').doc(list).delete()
                  }}
                     items={toDolist}
                     onClickItem={item=>{
-                        setActiveList(item)
+                        setActiveList(item);
                     }}
                     activeList={activeList}
                     isRemovable
@@ -84,12 +78,8 @@ function Layout(){
             <div className={'todo_tasks'}>    
 
                 {toDolist && activeList && <Tasks icon={<AiOutlineCheck/>}
-                        list={activeList}
+                        listId={activeList}
                         onEditTitle={renameTitle}
-                        title={renameTitleState}
-                        onRenameTitle={setRenameTitleState}   
-
-                       
                 />}
 
 
