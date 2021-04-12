@@ -1,13 +1,11 @@
 import React,{useState,useEffect} from 'react'
-import {useRouteMatch,useHistory,useLocation} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {FaCircle} from 'react-icons/fa'
 import {AiOutlineClose} from 'react-icons/ai'
-
 import './List.scss'
 import classNames from 'classnames'
-import dataBase from '../../localFireBase'
 
-export default ({ items,onClick,isRemovable,onRemove,onClickItem,activeList,activeTasks})=>{
+export default ({ items,onClick,isRemovable,onRemove,onClickItem,activeList})=>{
 
     
     const RemoveList=(list)=>{
@@ -22,7 +20,7 @@ export default ({ items,onClick,isRemovable,onRemove,onClickItem,activeList,acti
              return(
                  <li onClick={onClickItem?()=>{onClickItem(item.id)}:null}
                      key={i}
-                     className={classNames(item.data.className,  {active: activeList && activeList.id === item.id})}
+                     className={classNames(item.data.className,  {active: activeList === item.id})}
                      >
                      <i>{item.data.icon? item.data.icon:<FaCircle fontSize={'10px'} fill={item.data.color}/>}</i>
 

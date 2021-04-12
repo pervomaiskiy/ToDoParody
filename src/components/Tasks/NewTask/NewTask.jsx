@@ -20,8 +20,10 @@ export default function NewTask({listId,taskList}) {
                 .set({tasks: newTasksList},{merge:true})
                 taskNameInp.current.value = ''
                 taskNameInp.current.classList.remove('falseValue')
+                toggleFofrvisable()
             }else{
                 taskNameInp.current.classList.add('falseValue')
+                
             }
              
     }
@@ -32,7 +34,7 @@ export default function NewTask({listId,taskList}) {
                 <div onClick={toggleFofrvisable} className="tasks_form-new">
                     <i alt='Add icons'><AiOutlinePlus/></i>
                     <span>Новая задача</span>
-                </div>:
+                </div>  :
                 <div className="tasks_form-block">
                     <input ref={taskNameInp} className={'field'} type={'text'} placeholder={'Текст задачи'}></input>
                     <button onClick={addNewTask} className={'button'}>Добавить</button>

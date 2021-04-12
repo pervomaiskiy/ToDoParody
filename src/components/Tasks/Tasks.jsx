@@ -4,17 +4,16 @@ import {FiEdit3} from 'react-icons/fi';
 import dataBase from '../../localFireBase'
 import NewTask from './NewTask/NewTask'
 
-function Tasks({icon,listId,onEditTitle}){
+function Tasks({icon,listId,onEditTitle,withoutEmpty}){
 
         const [taskState,setTaskState] = useState({tasks:[]})
-
-
 
         useEffect(() => {
             if(listId){
             dataBase.collection('lists')
             .doc(listId)
             .onSnapshot((snapshot)=>{
+                
                 setTaskState(snapshot.data()) 
             })
             }
@@ -50,13 +49,13 @@ function Tasks({icon,listId,onEditTitle}){
 
         return(
             <div className={'tasks'}>
-                <h2 className={'tasks_title'}>{taskState.name}
+                <h2 style={{color:taskState.color}} className={'tasks_title'}>{taskState.name}
                     <i className={'rename'}
                         onClick={()=>editTitle()}
                     ><FiEdit3/></i>
                 </h2>
                 <div className={'tasks_items'}>
-                    {!taskState.tasks.length && <h2>Задачи отсутствуют</h2>}
+                    {!withoutEmpty && !taskState.tasks.length && <h2>Задачи отсутствуют</h2>}
                     {taskState.tasks.map((task,i)=>{
                         return(
                             <div key={i} className={'tasks_item'}>
@@ -69,7 +68,7 @@ function Tasks({icon,listId,onEditTitle}){
                                         >{icon}</label>
                                     </div>
                                     <input readOnly value={task.name}></input>
-                                    <p onClick={()=>deleteTask(i)}>delete</p>
+                                    {task.done?<p onClick={()=>deleteTask(i)}>delete</p>:null}
                                 </div>
                             </div>
 
