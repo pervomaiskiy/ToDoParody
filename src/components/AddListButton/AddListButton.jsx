@@ -29,7 +29,7 @@ function addNewList(){
     })
     listNameInp.current.value = ''
     listNameInp.current.classList.remove('falseValue')
-    setVisablePopup(false)
+    // setVisablePopup(false)
     setSelectedColor('#C9D1D3')
 
     

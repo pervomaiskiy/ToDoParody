@@ -1,11 +1,8 @@
 import './Tasks.scss';
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import {FiEdit3} from 'react-icons/fi';
-import {useLocation} from 'react-router-dom'
-import {useState,useEffect} from 'react'
 import dataBase from '../../localFireBase'
-import {AiOutlinePlus} from 'react-icons/ai'
-
+import NewTask from './NewTask/NewTask'
 
 function Tasks({icon,listId,onEditTitle}){
 
@@ -17,8 +14,7 @@ function Tasks({icon,listId,onEditTitle}){
             if(listId){
             dataBase.collection('lists')
             .doc(listId)
-            .get().then((snapshot)=>{
-                console.log(`qqqqq`)
+            .onSnapshot((snapshot)=>{
                 setTaskState(snapshot.data()) 
             })
             }
@@ -38,12 +34,20 @@ function Tasks({icon,listId,onEditTitle}){
             .update({tasks: taskState.tasks.map((item,i)=>{
                     if(i === id){
                         item.done = !item.done
-                        console.log('rerender')
                     }
                     return item
                 })
             })
         }
+
+            const deleteTask=(id)=>{
+                dataBase.collection('lists')
+                .doc(listId)
+                .set({tasks: taskState.tasks.filter((item,i)=>{if(id!=i)return item})},{merge: true})
+                
+            }
+
+
         return(
             <div className={'tasks'}>
                 <h2 className={'tasks_title'}>{taskState.name}
@@ -65,19 +69,18 @@ function Tasks({icon,listId,onEditTitle}){
                                         >{icon}</label>
                                     </div>
                                     <input readOnly value={task.name}></input>
+                                    <p onClick={()=>deleteTask(i)}>delete</p>
                                 </div>
                             </div>
 
                         )
                     })}
-                    <div className="tasks_form">
-                        <div className="tasks__form-new">
-                            <i><AiOutlinePlus/></i>
-                            <span>Новая задача</span>
-                        </div>
-                    </div>
+
                 </div>
-    
+                <NewTask
+                    listId={listId}
+                    taskList={taskState.tasks}
+                />
 
                 
 

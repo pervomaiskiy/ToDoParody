@@ -1,0 +1,43 @@
+.tasks_form{
+    &-block{
+        .button{
+            margin-right: 10px;
+            margin-top: 15px;
+        }
+    }
+    &-new{
+        display: flex;
+        align-items: center;
+        margin-top: 15px;
+        opacity: .4;
+        cursor: pointer;
+        transition: opacity .25s ease-in-out;
+        i{
+            display: inline-flex;
+            font-size: 20px;
+            color: grey;
+            margin-left: 2px;
+
+        }
+        span{
+            font-size: 14px;
+            color: grey;
+            margin-left: 5px;
+        }
+        &:hover{
+            opacity: .9;
+        }
+    }
+}
+
+.greyBtn{
+    background-color: rgb(243, 245, 247);
+    color: rgb(68, 68, 68);
+    &:hover{
+        background: darken(rgb(243, 245, 247), 6%);
+    }
+    &:active{
+        background: darken(rgb(243, 245, 247), 10%);
+
+    }
+}

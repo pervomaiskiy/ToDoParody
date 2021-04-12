@@ -17,7 +17,7 @@ function Layout(){
     const renameTitle=(id,title)=>{
         dataBase.collection('lists')
         .doc(id)
-        .update({name: title})  
+        .set({name: title},{merge: true})
     }
 
 
