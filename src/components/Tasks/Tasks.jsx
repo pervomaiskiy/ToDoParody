@@ -1,9 +1,10 @@
 import './Tasks.scss';
 import React,{useState,useEffect} from 'react';
+import {Link} from 'react-router-dom'
 import {FiEdit3} from 'react-icons/fi';
 import dataBase from '../../localFireBase'
 import NewTask from './NewTask/NewTask'
-
+import TaskItem from './TaskItem'
 function Tasks({icon,listId,onEditTitle,withoutEmpty}){
 
         const [taskState,setTaskState] = useState({tasks:[]})
@@ -27,7 +28,8 @@ function Tasks({icon,listId,onEditTitle,withoutEmpty}){
 
             }
         }
-        const deleteTaskResolution=(id)=>{
+
+        const completedTask=(id)=>{
             dataBase.collection('lists')
             .doc(listId)
             .update({tasks: taskState.tasks.map((item,i)=>{
@@ -39,38 +41,49 @@ function Tasks({icon,listId,onEditTitle,withoutEmpty}){
             })
         }
 
-            const deleteTask=(id)=>{
-                dataBase.collection('lists')
-                .doc(listId)
-                .set({tasks: taskState.tasks.filter((item,i)=>{if(id!=i)return item})},{merge: true})
-                
-            }
+        const deleteTask=(id)=>{
+            dataBase.collection('lists')
+            .doc(listId)
+            .set({tasks: taskState.tasks.filter((item,i)=>{if(id!=i)return item})},{merge: true})
+            
+        }
 
+        const probanazvi=(id,newName)=>{
+            dataBase.collection('lists')
+            .doc(listId)
+            .update({tasks: taskState.tasks.map((item,i)=>{
+                    if(i === id){
+                        item.name = newName
+                    }
+                    return item
+                })
+            })
+        }
 
         return(
             <div className={'tasks'}>
-                <h2 style={{color:taskState.color}} className={'tasks_title'}>{taskState.name}
-                    <i className={'rename'}
-                        onClick={()=>editTitle()}
-                    ><FiEdit3/></i>
-                </h2>
+                <Link to={`/lists/${listId}`} style={{textDecoration:'none'}}>
+                    <h2 style={{color:taskState.color}} className={'tasks_title'}>{taskState.name}
+                        <i className={'rename'}
+                            onClick={()=>editTitle()}
+                        ><FiEdit3/></i>
+                    </h2>
+                </Link>
+
+
                 <div className={'tasks_items'}>
                     {!withoutEmpty && !taskState.tasks.length && <h2>Задачи отсутствуют</h2>}
                     {taskState.tasks.map((task,i)=>{
                         return(
-                            <div key={i} className={'tasks_item'}>
-                                <div className={'tasks_item-row'}>
-                                    <div className={'checkbox'}>
-                                        {task.done && <div>proba trushki</div>}
-                                        <input id={i} type={'checkbox'}></input>
-                                        <label htmlFor={i}
-                                        onClick={()=>deleteTaskResolution(i)}
-                                        >{icon}</label>
-                                    </div>
-                                    <input readOnly value={task.name}></input>
-                                    {task.done?<p onClick={()=>deleteTask(i)}>delete</p>:null}
-                                </div>
-                            </div>
+                           <TaskItem
+                            key={i}
+                            task={task}
+                            id={i}
+                            icon={icon}
+                            deleteTask={deleteTask}
+                            completedTask={completedTask}
+                            renameTaskName={probanazvi}
+                           />
 
                         )
                     })}

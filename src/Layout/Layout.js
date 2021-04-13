@@ -16,6 +16,7 @@ function Layout(){
     let history = useHistory()
     let location = useLocation()
     console.log(history)
+
     const renameTitle=(id,title)=>{
         dataBase.collection('lists')
         .doc(id)
@@ -66,6 +67,7 @@ function Layout(){
                             data:{
                             icon:<AiOutlineUnorderedList/>,
                             name:'Все задачи',
+                            active: !activeList
                             }
                         }
                     ]}

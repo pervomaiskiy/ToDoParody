@@ -1,5 +1,4 @@
-import React,{useState,useEffect} from 'react'
-import {Link} from 'react-router-dom'
+import React from 'react'
 import {FaCircle} from 'react-icons/fa'
 import {AiOutlineClose} from 'react-icons/ai'
 import './List.scss'
@@ -20,7 +19,7 @@ export default ({ items,onClick,isRemovable,onRemove,onClickItem,activeList})=>{
              return(
                  <li onClick={onClickItem?()=>{onClickItem(item.id)}:null}
                      key={i}
-                     className={classNames(item.data.className,  {active: activeList === item.id})}
+                     className={classNames(item.data.className,  {active: item.data.active?item.data.active:activeList === item.id })}
                      >
                      <i>{item.data.icon? item.data.icon:<FaCircle fontSize={'10px'} fill={item.data.color}/>}</i>
 
